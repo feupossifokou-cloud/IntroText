@@ -97,31 +97,67 @@ Documentation for SQLite built-in functions can be found at https://www.sqlite.o
 1. **Concatenate Course Name and Semester:**  
    - Write a query to list all courses, concatenating the `course_name` and `semester` fields with a hyphen between them. Like this:  
    "IT Essentials - 2024-3"
-   
+
+   SELECT CONCAT(course_name, ' - ', semester) AS course_semester
+FROM courses;
+
 2. **Find Courses with Labs on Fridays:**  
    - Write a query to find all courses that have a lab session scheduled on Friday. Include only the `course_id`, `course_name`, and `lab_time` in the result.  
-   Hint: Use `LIKE`  
+   Hint: Use `LIKE`
+
+SELECT course_id, course_name, lab_time
+FROM courses
+WHERE lab_time LIKE '%Friday%';
+
    
 3. **Assignments due in 2025:**  
-   - Write a query to list all assignments with a due date in 2025.  
+   - Write a query to list all assignments with a due date in 2025.
+  
+     SELECT *
+FROM assignments
+WHERE due_date LIKE '2025%';
+
    
 4. **Count Assignments by Status:**  
    - Write a query to count the number of assignments for each status (e.g., "Not Started", "In Progress", "Completed").  
    Hint: Use `GROUP BY`
+
+SELECT status, COUNT(*) AS assignment_count
+FROM assignments
+GROUP BY status;
+
    
 5. **Longest Course Name:**  
    - Write a query to find the course with the longest `course_name`. Use the `length()` function to compare the lengths.  
    Hint: Either use `ORDER BY ... DESC` or do it in two steps: first find the maximum length, then find the course with that length.
+
+SELECT *
+FROM courses
+ORDER BY LENGTH(course_name) DESC
+LIMIT 1;
+
    
 6. **Uppercase Course Names:**  
-   - Write a query to return a list of all course names in uppercase.  
+   - Write a query to return a list of all course names in uppercase.
+  
+     SELECT UPPER(course_name) AS course_name_upper
+FROM courses;
+
    
 7. **Assignments Due in September:**  
    - Write a query to list the titles of all assignments that are due in September, regardless of year. Use the `LIKE` operator to filter by `due_date`.
+  
+     SELECT title
+FROM assignments
+WHERE due_date LIKE '%-09-%';
+
    
 8. **Assignments with Missing Due Dates:**  
    - Write a query to find all assignments where the `due_date` is missing. Note: There might be no assignments with NULL due_dates initially, but one was added if you ran the INSERT statement in the examples above.
    Hint: `due_date IS NULL`
    
+SELECT *
+FROM assignments
+WHERE due_date IS NULL;
 
 
